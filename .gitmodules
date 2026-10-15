@@ -1,0 +1,21 @@
+[submodule "Segcache"]
+	path = Segcache
+	url = https://github.com/DaokunHu/Segcache.git
+[submodule "third/Segcache"]
+	path = third/Segcache
+	url = https://github.com/DaokunHu/Segcache.git
+[submodule "third/viper"]
+	path = third/viper
+	url = https://github.com/DaokunHu/viper.git
+[submodule "third/Plush"]
+	path = third/Plush
+	url = https://github.com/DaokunHu/Plush.git
+[submodule "benchmark/third/PaperCache"]
+	path = benchmark/third/PaperCache
+	url = https://github.com/PaperCache/paper-client-cpp.git
+[submodule "third/PaperCache"]
+	path = third/PaperCache
+	url = https://github.com/PaperCache/paper-client-cpp.git
+[submodule "third/CacheLib"]
+	path = third/CacheLib
+	url = https://github.com/DaokunHu/CacheLib.git
