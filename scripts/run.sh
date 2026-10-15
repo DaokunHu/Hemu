@@ -95,61 +95,61 @@ exp_throughput() {
         for t in 64; do
             clear_pool
 
-            # echo "Redis"
-            # numactl -N 0 "$BENCH" --cache Redis --datafile "cluster$d" \
-            #     --threads $t --capacity $j
+            echo "Redis"
+            numactl -N 0 "$BENCH" --cache Redis --datafile "cluster$d" \
+                --threads $t --capacity $j
 
-            # echo "PaperCache"
-            # numactl -N 0 "$BENCH" --cache PaperCache --datafile "cluster$d" \
-            #     --threads $t --capacity $j
+            echo "PaperCache"
+            numactl -N 0 "$BENCH" --cache PaperCache --datafile "cluster$d" \
+                --threads $t --capacity $j
 
-            # # Memcached requires starting/stopping the daemon
-            # if ! service memcached stop 2>/dev/null; then
-            #     echo "Warning: Failed to stop memcached service, trying to kill process"
-            #     pkill -f "memcached -p 11211" 2>/dev/null || true
-            # fi
-            # mem_mb=$(( j / 1000000 ))
-            # numactl -m 1 memcached -p 11211 -m $mem_mb -d -u root
-            # echo "Memcached"
-            # numactl -N 0 "$BENCH" --cache Memcached --datafile "cluster$d" \
-            #     --threads $t --capacity $j
-            # pkill -f "memcached -p 11211" 2>/dev/null || true
+            # Memcached requires starting/stopping the daemon
+            if ! service memcached stop 2>/dev/null; then
+                echo "Warning: Failed to stop memcached service, trying to kill process"
+                pkill -f "memcached -p 11211" 2>/dev/null || true
+            fi
+            mem_mb=$(( j / 1000000 ))
+            numactl -m 1 memcached -p 11211 -m $mem_mb -d -u root
+            echo "Memcached"
+            numactl -N 0 "$BENCH" --cache Memcached --datafile "cluster$d" \
+                --threads $t --capacity $j
+            pkill -f "memcached -p 11211" 2>/dev/null || true
 
-            # clear_pool
-            # echo "Hemu"
-            # numactl -N 0 "$BENCH" --cache Hemu --datafile "cluster$d" \
-            #     --threads $t --capacity $j \
-            #     --esm $ESM --cxl-node $CXL_NODE Hemu.Balancer_ON=0 \
-            #     ${HEMU_OPTS[@]}
+            clear_pool
+            echo "Hemu"
+            numactl -N 0 "$BENCH" --cache Hemu --datafile "cluster$d" \
+                --threads $t --capacity $j \
+                --esm $ESM --cxl-node $CXL_NODE Hemu.Balancer_ON=0 \
+                ${HEMU_OPTS[@]}
             
-            # echo "Hemu"
-            # numactl -N 0 "$BENCH" --cache Hemu --datafile "cluster$d" \
-            #     --threads $t --capacity $j \
-            #     --esm $ESM --cxl-node $CXL_NODE Hemu.Balancer_ON=1 \
-            #     ${HEMU_OPTS[@]}
+            echo "Hemu"
+            numactl -N 0 "$BENCH" --cache Hemu --datafile "cluster$d" \
+                --threads $t --capacity $j \
+                --esm $ESM --cxl-node $CXL_NODE Hemu.Balancer_ON=1 \
+                ${HEMU_OPTS[@]}
 
 
 
-            # clear_pool
-            # echo "Cachelib"
-            # numactl -N 0 "$BENCH" --cache Cachelib --datafile "cluster$d" \
-            #     --threads $t --capacity $j
+            clear_pool
+            echo "Cachelib"
+            numactl -N 0 "$BENCH" --cache Cachelib --datafile "cluster$d" \
+                --threads $t --capacity $j
 
-            # clear_pool
-            # echo "Segcache"
-            # numactl -N 0 "$BENCH" --cache Segcache --datafile "cluster$d" \
-            #     --threads $t --capacity $j \
-            #     --config ../benchmark/Segcache_bench/Segcache.conf
+            clear_pool
+            echo "Segcache"
+            numactl -N 0 "$BENCH" --cache Segcache --datafile "cluster$d" \
+                --threads $t --capacity $j \
+                --config ../benchmark/Segcache_bench/Segcache.conf
 
-            # clear_pool
-            # echo "Viper"
-            # numactl -N 0 "$BENCH" --cache Viper --datafile "cluster$d" \
-            #     --threads $t --capacity  $j
+            clear_pool
+            echo "Viper"
+            numactl -N 0 "$BENCH" --cache Viper --datafile "cluster$d" \
+                --threads $t --capacity  $j
 
-            # clear_pool
-            # echo "Plush"
-            # numactl -N 0 "$BENCH" --cache Plush --datafile "cluster$d" \
-            #     --threads $t --capacity $j
+            clear_pool
+            echo "Plush"
+            numactl -N 0 "$BENCH" --cache Plush --datafile "cluster$d" \
+                --threads $t --capacity $j
         done
     done
 
@@ -161,32 +161,32 @@ exp_throughput() {
             drop_caches
             clear_pool
 
-            # echo "Redis  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Redis --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity
+            echo "Redis  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Redis --datafile "ycsb$w" \
+                --threads $t --capacity $capacity
 
-            # echo "PaperCache  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache PaperCache --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity
+            echo "PaperCache  ycsb$w"
+            numactl -N 0 "$BENCH" --cache PaperCache --datafile "ycsb$w" \
+                --threads $t --capacity $capacity
 
-            # Memcached requires starting/stopping the daemon
-            # if ! service memcached stop 2>/dev/null; then
-            #     echo "Warning: Failed to stop memcached service, trying to kill process"
-            #     systemctl stop memcached
-            # fi
-            # mem_mb=$(( capacity / 1000000 ))
-            # numactl -m 1 memcached -p 11211 -m $mem_mb -d -u root
-            # echo "Memcached  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Memcached --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity
-            # systemctl stop memcached
+            Memcached requires starting/stopping the daemon
+            if ! service memcached stop 2>/dev/null; then
+                echo "Warning: Failed to stop memcached service, trying to kill process"
+                systemctl stop memcached
+            fi
+            mem_mb=$(( capacity / 1000000 ))
+            numactl -m 1 memcached -p 11211 -m $mem_mb -d -u root
+            echo "Memcached  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Memcached --datafile "ycsb$w" \
+                --threads $t --capacity $capacity
+            systemctl stop memcached
 
-            # clear_pool
-            # echo "Hemu  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Hemu --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity \
-            #     --esm $ESM --cxl-node $CXL_NODE \
-            #     ${HEMU_OPTS[@]} Hemu.Balancer_ON=0
+            clear_pool
+            echo "Hemu  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Hemu --datafile "ycsb$w" \
+                --threads $t --capacity $capacity \
+                --esm $ESM --cxl-node $CXL_NODE \
+                ${HEMU_OPTS[@]} Hemu.Balancer_ON=0
 
             echo "Hemu  ycsb$w"
             numactl -N 0 "$BENCH" --cache Hemu --datafile "ycsb$w" \
@@ -196,26 +196,26 @@ exp_throughput() {
 
 
 
-            # clear_pool
-            # echo "Cachelib  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Cachelib --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity
+            clear_pool
+            echo "Cachelib  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Cachelib --datafile "ycsb$w" \
+                --threads $t --capacity $capacity
             
-            # clear_pool
-            # echo "Segcache  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Segcache --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity \
-            #     --config ../benchmark/Segcache_bench/Segcache.conf
+            clear_pool
+            echo "Segcache  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Segcache --datafile "ycsb$w" \
+                --threads $t --capacity $capacity \
+                --config ../benchmark/Segcache_bench/Segcache.conf
             
-            # clear_pool
-            # echo "Viper  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Viper --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity --end 0.5
+            clear_pool
+            echo "Viper  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Viper --datafile "ycsb$w" \
+                --threads $t --capacity $capacity --end 0.5
 
-            # clear_pool
-            # echo "Plush  ycsb$w"
-            # numactl -N 0 "$BENCH" --cache Plush --datafile "ycsb$w" \
-            #     --threads $t --capacity $capacity 
+            clear_pool
+            echo "Plush  ycsb$w"
+            numactl -N 0 "$BENCH" --cache Plush --datafile "ycsb$w" \
+                --threads $t --capacity $capacity 
         done
     done
 }
